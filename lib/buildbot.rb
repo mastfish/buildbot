@@ -1,6 +1,14 @@
-class Buildbot
-  def hello
+class Watcher
+
+  def main
     github = Github.new :user => 'mastfish', :repo => 'buildbot'
-    p github.pull_requests.list
+    github.pull_requests.list.each do |pull|
+      process_pull pull
+    end
   end
+
+  def pull pull
+    p pull.inspect
+  end
+
 end
