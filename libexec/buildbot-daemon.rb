@@ -41,9 +41,17 @@ end
 #end
 
 DaemonKit::Cron.scheduler.every("30s") do
-  bb = Watcher.new
-  DaemonKit.logger.debug "Scheduled task completed at #{Time.now}"
-  bb.main
+  DaemonKit.logger.debug "Watcher task started at #{Time.now}"
+  watcher = Watcher.new
+  watcher.main
+  DaemonKit.logger.debug "Watcher task completed at #{Time.now}"
+end
+
+DaemonKit::Cron.scheduler.every("1m") do
+  DaemonKit.logger.debug "Executor task started at #{Time.now}"
+  e = Executor.new
+  e.main
+  DaemonKit.logger.debug "Executor task completed at #{Time.now}"
 end
 
 # Run our 'cron' dameon, suspending the current thread

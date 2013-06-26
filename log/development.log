@@ -49,3 +49,45 @@
 2013-06-26 18:25:34.841344 buildbot(4718) [DEBUG] buildbot-daemon.rb:46: 
 2013-06-26 18:26:04.929070 buildbot(4718) [DEBUG] buildbot-daemon.rb:45: Scheduled task completed at 2013-06-26 18:26:04 +1000
 2013-06-26 18:26:04.934143 buildbot(4718) [DEBUG] buildbot-daemon.rb:46: 
+2013-06-26 19:33:48.466217 buildbot(5447) [INFO] [daemon-kit]: DaemonKit (0.2.1) booting in development mode
+2013-06-26 19:33:48.466374 buildbot(5447) [INFO] [daemon-kit]: Setting up trap for USR1
+2013-06-26 19:33:48.466451 buildbot(5447) [INFO] [daemon-kit]: Setting up trap for USR2
+2013-06-26 19:33:48.466526 buildbot(5447) [INFO] [daemon-kit]: Setting up trap for HUP
+2013-06-26 19:33:48.466600 buildbot(5447) [INFO] [daemon-kit]: Setting up trap for INT
+2013-06-26 19:33:48.466664 buildbot(5447) [INFO] [daemon-kit]: Setting up trap for TERM
+2013-06-26 19:33:48.467846 buildbot(5447) [INFO] [daemon-kit]: DaemonKit (0.2.1) booted, now running buildbot
+2013-06-26 19:33:48.468779 buildbot(5447) [INFO] [daemon-kit]: Starting rufus-scheduler
+2013-06-26 19:34:18.579248 buildbot(5447) [DEBUG] buildbot-daemon.rb:44: Watcher task started at 2013-06-26 19:34:18 +1000
+2013-06-26 19:34:18.579621 buildbot(5447) [ERROR] [daemon-kit]: Cron: job Rufus::Scheduler::EveryJob_70242090637500 caught exception: 'uninitialized constant Watcher'
+2013-06-26 19:34:18.579763 buildbot(5447) [ERROR] EXCEPTION: uninitialized constant Watcher: ["/libexec/buildbot-daemon.rb:45:in `block in <top (required)>'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:231:in `call'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:231:in `trigger_block'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:191:in `block in trigger'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/scheduler.rb:415:in `call'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/scheduler.rb:415:in `block in trigger_job'"]
+2013-06-26 19:34:49.890255 buildbot(5486) [INFO] [daemon-kit]: DaemonKit (0.2.1) booting in development mode
+2013-06-26 19:34:49.890397 buildbot(5486) [INFO] [daemon-kit]: Setting up trap for USR1
+2013-06-26 19:34:49.890483 buildbot(5486) [INFO] [daemon-kit]: Setting up trap for USR2
+2013-06-26 19:34:49.890554 buildbot(5486) [INFO] [daemon-kit]: Setting up trap for HUP
+2013-06-26 19:34:49.890628 buildbot(5486) [INFO] [daemon-kit]: Setting up trap for INT
+2013-06-26 19:34:49.890690 buildbot(5486) [INFO] [daemon-kit]: Setting up trap for TERM
+2013-06-26 19:34:49.891796 buildbot(5486) [INFO] [daemon-kit]: DaemonKit (0.2.1) booted, now running buildbot
+2013-06-26 19:34:49.892793 buildbot(5486) [INFO] [daemon-kit]: Starting rufus-scheduler
+2013-06-26 19:35:20.3658 buildbot(5486) [DEBUG] buildbot-daemon.rb:44: Watcher task started at 2013-06-26 19:35:20 +1000
+2013-06-26 19:35:20.4015 buildbot(5486) [ERROR] [daemon-kit]: Cron: job Rufus::Scheduler::EveryJob_70266454759480 caught exception: 'uninitialized constant Watcher'
+2013-06-26 19:35:20.4154 buildbot(5486) [ERROR] EXCEPTION: uninitialized constant Watcher: ["/libexec/buildbot-daemon.rb:45:in `block in <top (required)>'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:231:in `call'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:231:in `trigger_block'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:191:in `block in trigger'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/scheduler.rb:415:in `call'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/scheduler.rb:415:in `block in trigger_job'"]
+2013-06-26 19:35:50.146853 buildbot(5486) [DEBUG] buildbot-daemon.rb:44: Watcher task started at 2013-06-26 19:35:50 +1000
+2013-06-26 19:35:50.147099 buildbot(5486) [ERROR] [daemon-kit]: Cron: job Rufus::Scheduler::EveryJob_70266454759480 caught exception: 'uninitialized constant Watcher'
+2013-06-26 19:35:50.147194 buildbot(5486) [ERROR] EXCEPTION: uninitialized constant Watcher: ["/libexec/buildbot-daemon.rb:45:in `block in <top (required)>'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:231:in `call'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:231:in `trigger_block'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:191:in `block in trigger'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/scheduler.rb:415:in `call'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/scheduler.rb:415:in `block in trigger_job'"]
+2013-06-26 19:35:50.147311 buildbot(5486) [DEBUG] buildbot-daemon.rb:51: Executor task started at 2013-06-26 19:35:50 +1000
+2013-06-26 19:35:50.147514 buildbot(5486) [ERROR] [daemon-kit]: Cron: job Rufus::Scheduler::EveryJob_70266454758140 caught exception: 'uninitialized constant Executor'
+2013-06-26 19:35:50.147587 buildbot(5486) [ERROR] EXCEPTION: uninitialized constant Executor: ["/libexec/buildbot-daemon.rb:52:in `block in <top (required)>'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:231:in `call'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:231:in `trigger_block'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/jobs.rb:191:in `block in trigger'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/scheduler.rb:415:in `call'", "/Users/justin.lambert/.rvm/gems/ruby-2.0.0-p195/gems/rufus-scheduler-2.0.19/lib/rufus/sc/scheduler.rb:415:in `block in trigger_job'"]
+2013-06-26 19:36:20.758660 buildbot(5588) [INFO] [daemon-kit]: DaemonKit (0.2.1) booting in development mode
+2013-06-26 19:36:20.758801 buildbot(5588) [INFO] [daemon-kit]: Setting up trap for USR1
+2013-06-26 19:36:20.758883 buildbot(5588) [INFO] [daemon-kit]: Setting up trap for USR2
+2013-06-26 19:36:20.758958 buildbot(5588) [INFO] [daemon-kit]: Setting up trap for HUP
+2013-06-26 19:36:20.759032 buildbot(5588) [INFO] [daemon-kit]: Setting up trap for INT
+2013-06-26 19:36:20.759093 buildbot(5588) [INFO] [daemon-kit]: Setting up trap for TERM
+2013-06-26 19:36:20.760520 buildbot(5588) [INFO] [daemon-kit]: DaemonKit (0.2.1) booted, now running buildbot
+2013-06-26 19:36:20.761425 buildbot(5588) [INFO] [daemon-kit]: Starting rufus-scheduler
+2013-06-26 19:36:50.887804 buildbot(5588) [DEBUG] buildbot-daemon.rb:44: Watcher task started at 2013-06-26 19:36:50 +1000
+2013-06-26 19:36:52.332988 buildbot(5588) [DEBUG] buildbot-daemon.rb:47: Watcher task completed at 2013-06-26 19:36:52 +1000
+2013-06-26 19:37:21.7821 buildbot(5588) [DEBUG] buildbot-daemon.rb:44: Watcher task started at 2013-06-26 19:37:21 +1000
+2013-06-26 19:37:21.7990 buildbot(5588) [DEBUG] buildbot-daemon.rb:51: Executor task started at 2013-06-26 19:37:21 +1000
+2013-06-26 19:37:21.24487 buildbot(5588) [DEBUG] buildbot-daemon.rb:54: Executor task completed at 2013-06-26 19:37:21 +1000
+2013-06-26 19:37:22.107890 buildbot(5588) [DEBUG] buildbot-daemon.rb:47: Watcher task completed at 2013-06-26 19:37:22 +1000
