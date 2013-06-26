@@ -1,0 +1,51 @@
+# Logfile created on 2013-06-26 18:14:06 +1000 by logger.rb/36483
+2013-06-26 18:14:06.497 buildbot(4475) [INFO] [daemon-kit]: DaemonKit (0.2.1) booting in development mode
+2013-06-26 18:14:06.611 buildbot(4475) [INFO] [daemon-kit]: Setting up trap for USR1
+2013-06-26 18:14:06.706 buildbot(4475) [INFO] [daemon-kit]: Setting up trap for USR2
+2013-06-26 18:14:06.784 buildbot(4475) [INFO] [daemon-kit]: Setting up trap for HUP
+2013-06-26 18:14:06.858 buildbot(4475) [INFO] [daemon-kit]: Setting up trap for INT
+2013-06-26 18:14:06.933 buildbot(4475) [INFO] [daemon-kit]: Setting up trap for TERM
+2013-06-26 18:14:06.2917 buildbot(4475) [INFO] [daemon-kit]: DaemonKit (0.2.1) booted, now running buildbot
+2013-06-26 18:14:06.3657 buildbot(4475) [INFO] [daemon-kit]: Starting rufus-scheduler
+2013-06-26 18:15:06.244845 buildbot(4475) [DEBUG] buildbot-daemon.rb:44: Scheduled task completed at 2013-06-26 18:15:06 +1000
+2013-06-26 18:15:21.959956 buildbot(4496) [INFO] [daemon-kit]: DaemonKit (0.2.1) booting in development mode
+2013-06-26 18:15:21.960103 buildbot(4496) [INFO] [daemon-kit]: Setting up trap for USR1
+2013-06-26 18:15:21.960192 buildbot(4496) [INFO] [daemon-kit]: Setting up trap for USR2
+2013-06-26 18:15:21.960269 buildbot(4496) [INFO] [daemon-kit]: Setting up trap for HUP
+2013-06-26 18:15:21.960345 buildbot(4496) [INFO] [daemon-kit]: Setting up trap for INT
+2013-06-26 18:15:21.960408 buildbot(4496) [INFO] [daemon-kit]: Setting up trap for TERM
+2013-06-26 18:15:21.962390 buildbot(4496) [INFO] [daemon-kit]: DaemonKit (0.2.1) booted, now running buildbot
+2013-06-26 18:15:21.963197 buildbot(4496) [INFO] [daemon-kit]: Starting rufus-scheduler
+2013-06-26 18:15:23.287906 buildbot(4496) [DEBUG] buildbot-daemon.rb:44: Scheduled task completed at 2013-06-26 18:15:23 +1000
+2013-06-26 18:15:24.281369 buildbot(4496) [DEBUG] buildbot-daemon.rb:44: Scheduled task completed at 2013-06-26 18:15:24 +1000
+2013-06-26 18:15:25.274082 buildbot(4496) [DEBUG] buildbot-daemon.rb:44: Scheduled task completed at 2013-06-26 18:15:25 +1000
+2013-06-26 18:15:26.267617 buildbot(4496) [DEBUG] buildbot-daemon.rb:44: Scheduled task completed at 2013-06-26 18:15:26 +1000
+2013-06-26 18:15:27.261157 buildbot(4496) [DEBUG] buildbot-daemon.rb:44: Scheduled task completed at 2013-06-26 18:15:27 +1000
+2013-06-26 18:17:05.799565 buildbot(4633) [INFO] [daemon-kit]: DaemonKit (0.2.1) booting in development mode
+2013-06-26 18:17:05.799711 buildbot(4633) [INFO] [daemon-kit]: Setting up trap for USR1
+2013-06-26 18:17:05.799794 buildbot(4633) [INFO] [daemon-kit]: Setting up trap for USR2
+2013-06-26 18:17:05.799864 buildbot(4633) [INFO] [daemon-kit]: Setting up trap for HUP
+2013-06-26 18:17:05.799940 buildbot(4633) [INFO] [daemon-kit]: Setting up trap for INT
+2013-06-26 18:17:05.800001 buildbot(4633) [INFO] [daemon-kit]: Setting up trap for TERM
+2013-06-26 18:17:05.801952 buildbot(4633) [INFO] [daemon-kit]: DaemonKit (0.2.1) booted, now running buildbot
+2013-06-26 18:17:05.802731 buildbot(4633) [INFO] [daemon-kit]: Starting rufus-scheduler
+2013-06-26 18:17:07.126017 buildbot(4633) [DEBUG] buildbot-daemon.rb:45: Scheduled task completed at 2013-06-26 18:17:07 +1000
+2013-06-26 18:17:07.126180 buildbot(4633) [DEBUG] buildbot-daemon.rb:46: hello
+2013-06-26 18:17:08.119512 buildbot(4633) [DEBUG] buildbot-daemon.rb:45: Scheduled task completed at 2013-06-26 18:17:08 +1000
+2013-06-26 18:17:08.119650 buildbot(4633) [DEBUG] buildbot-daemon.rb:46: hello
+2013-06-26 18:17:09.113113 buildbot(4633) [DEBUG] buildbot-daemon.rb:45: Scheduled task completed at 2013-06-26 18:17:09 +1000
+2013-06-26 18:17:09.113241 buildbot(4633) [DEBUG] buildbot-daemon.rb:46: hello
+2013-06-26 18:17:10.105081 buildbot(4633) [DEBUG] buildbot-daemon.rb:45: Scheduled task completed at 2013-06-26 18:17:10 +1000
+2013-06-26 18:17:10.105220 buildbot(4633) [DEBUG] buildbot-daemon.rb:46: hello
+2013-06-26 18:25:04.684393 buildbot(4718) [INFO] [daemon-kit]: DaemonKit (0.2.1) booting in development mode
+2013-06-26 18:25:04.684543 buildbot(4718) [INFO] [daemon-kit]: Setting up trap for USR1
+2013-06-26 18:25:04.684617 buildbot(4718) [INFO] [daemon-kit]: Setting up trap for USR2
+2013-06-26 18:25:04.684694 buildbot(4718) [INFO] [daemon-kit]: Setting up trap for HUP
+2013-06-26 18:25:04.684759 buildbot(4718) [INFO] [daemon-kit]: Setting up trap for INT
+2013-06-26 18:25:04.684819 buildbot(4718) [INFO] [daemon-kit]: Setting up trap for TERM
+2013-06-26 18:25:04.686093 buildbot(4718) [INFO] [daemon-kit]: DaemonKit (0.2.1) booted, now running buildbot
+2013-06-26 18:25:04.686996 buildbot(4718) [INFO] [daemon-kit]: Starting rufus-scheduler
+2013-06-26 18:25:34.807674 buildbot(4718) [DEBUG] buildbot-daemon.rb:45: Scheduled task completed at 2013-06-26 18:25:34 +1000
+2013-06-26 18:25:34.841344 buildbot(4718) [DEBUG] buildbot-daemon.rb:46: 
+2013-06-26 18:26:04.929070 buildbot(4718) [DEBUG] buildbot-daemon.rb:45: Scheduled task completed at 2013-06-26 18:26:04 +1000
+2013-06-26 18:26:04.934143 buildbot(4718) [DEBUG] buildbot-daemon.rb:46: 
