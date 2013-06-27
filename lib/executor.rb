@@ -22,7 +22,7 @@ class Executor
   #end test
 
   def main
-    url ="https://justin.lambert:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/clone/BUILDBOT-MAIN:BUILDNOT-FIRST?os_authType=basic"
+    url ="https://justin.lambert:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/clone/BUILDBOT-MAIN:BUILDBOT-FIRST?os_authType=basic"
     begin
       req = RestClient::Request.new(
         :method => :put,
