@@ -63,5 +63,6 @@ class Watcher
 
 end
 
+# Test code: this is only needed for development
 w = Watcher.new
 w.main
