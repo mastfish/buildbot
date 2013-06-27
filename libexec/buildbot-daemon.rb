@@ -54,5 +54,6 @@ DaemonKit::Cron.scheduler.every("1m") do
   DaemonKit.logger.debug "Executor task completed at #{Time.now}"
 end
 
+
 # Run our 'cron' dameon, suspending the current thread
 DaemonKit::Cron.run
