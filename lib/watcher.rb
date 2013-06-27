@@ -1,22 +1,4 @@
-# Test code
-# These requires are only needed to support development
-require 'github_api'
-require 'sqlite3'
-require 'active_record'
-
-ActiveRecord::Base.establish_connection(
-  :adapter => 'sqlite3',
-  :database => 'buildbot_db'
-)
-
-class PullLog < ActiveRecord::Base
-end
-
-class BuildQueue < ActiveRecord::Base
-end
-
 class Watcher
-
 
   def list
     github = Github.new :user => 'mastfish', :repo => 'buildbot'
@@ -62,7 +44,3 @@ class Watcher
   end
 
 end
-
-# Test code: this is only needed for development
-w = Watcher.new
-w.main

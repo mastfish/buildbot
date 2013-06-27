@@ -1,10 +1,25 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activerecord (1.6.0)
-    activesupport (3.1.12)
-      multi_json (~> 1.0)
+    activemodel (4.0.0)
+      activesupport (= 4.0.0)
+      builder (~> 3.1.0)
+    activerecord (4.0.0)
+      activemodel (= 4.0.0)
+      activerecord-deprecated_finders (~> 1.0.2)
+      activesupport (= 4.0.0)
+      arel (~> 4.0.0)
+    activerecord-deprecated_finders (1.0.3)
+    activesupport (4.0.0)
+      i18n (~> 0.6, >= 0.6.4)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
+      thread_safe (~> 0.1)
+      tzinfo (~> 0.3.37)
     addressable (2.3.5)
+    arel (4.0.0)
+    atomic (1.1.10)
+    builder (3.1.4)
     coderay (1.0.9)
     daemon-kit (0.2.1)
       eventmachine (>= 0.12.10)
@@ -31,6 +46,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     mini_portile (0.5.0)
+    minitest (4.7.5)
     multi_json (1.7.7)
     multi_xml (0.5.4)
     multipart-post (1.2.0)
@@ -59,21 +75,24 @@ GEM
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.13.1)
-    rubigen (1.5.8)
-      activesupport (>= 2.3.5, < 3.2.0)
+    rubigen (1.5.7)
+      activesupport (>= 2.3.5)
+      i18n
     rufus-scheduler (2.0.19)
       tzinfo (>= 0.3.23)
     safely (0.3.2)
     slop (3.4.5)
     sqlite3 (1.3.7)
     thor (0.18.1)
-    tzinfo (1.0.1)
+    thread_safe (0.1.0)
+      atomic
+    tzinfo (0.3.37)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord
+  activerecord (~> 4.0.0)
   daemon-kit
   github_api
   pry
