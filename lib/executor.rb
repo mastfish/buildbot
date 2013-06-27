@@ -32,7 +32,7 @@ class Executor
 
   def trigger_build build_trigger
     pull = PullLog.where(pull_id: build_trigger.pull_id)
-    payload = {os_authType: 'basic', os_username: &os_password=<pw>}
+    payload = {os_authType: 'basic', os_username: 'justin.lambert' os_password: ENV['PASSWORD']}
     res = R.put A + 'clone/BUILDBOT-MAIN:BUILDNOT-FIRST', '{}', :content_type => 'application/json'
   end
 

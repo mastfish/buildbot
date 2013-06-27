@@ -1,3 +1,12 @@
+BUILDBOT README
+================
+To do clone operations on bamboo, we need to auth
+To do this, add your password to "password" and source the file.
+You probably should run
+git update-index --assume-unchanged password
+To make sure you don't push up your credentials
+
+
 daemon-kit README
 ================
 
@@ -57,7 +66,7 @@ level to DEBUG.
 Bundler
 =======
 
-daemon-kit uses bundler to ease the nightmare of dependency loading in Ruby 
+daemon-kit uses bundler to ease the nightmare of dependency loading in Ruby
 projects. daemon-kit and its generators all create/update the Gemfile in the
 root of the daemon. You can satisfy the project's dependencies by running
 `bundle install` from within the project root.
