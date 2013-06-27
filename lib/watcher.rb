@@ -1,3 +1,4 @@
+# These requires are only needed to support development
 require 'github_api'
 require 'sqlite3'
 
