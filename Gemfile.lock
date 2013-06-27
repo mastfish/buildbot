@@ -1,9 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activerecord (1.6.0)
     activesupport (3.1.12)
       multi_json (~> 1.0)
-    addressable (2.3.4)
+    addressable (2.3.5)
     coderay (1.0.9)
     daemon-kit (0.2.1)
       eventmachine (>= 0.12.10)
@@ -72,6 +73,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord
   daemon-kit
   github_api
   pry

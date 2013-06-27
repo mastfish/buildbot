@@ -1,42 +1,68 @@
+# Test code
 # These requires are only needed to support development
 require 'github_api'
 require 'sqlite3'
+require 'active_record'
+
+ActiveRecord::Base.establish_connection(
+  :adapter => 'sqlite3',
+  :database => 'buildbot_db'
+)
+
+class PullLog < ActiveRecord::Base
+end
+
+class BuildQueue < ActiveRecord::Base
+end
 
 class Watcher
 
-  def main
-    github = Github.new :user => 'mastfish', :repo => 'buildbot'
 
-    github.pull_requests.list.each do |pull|
+  def list
+    # github.pull_requests.list
+
+    # Hitting rate limit on API, mock this for now
+    [OpenStruct.new({
+      "id"=>6577595,
+      "head"=> OpenStruct.new({'sha' => '12'})
+      })]
+  end
+
+  def main
+    init_db
+    github = Github.new :user => 'mastfish', :repo => 'buildbot'
+    list.each do |pull|
       process_pull pull
     end
   end
 
   def process_pull pull
-    # Here we assume any new commits will be added to the head
-    # No rebasing shenanigans
-    save_pull(pull.id,pull.head.sha)
+    result = init_or_get_by_pull_id(pull.id)
+    if (result.last_commit_hash != pull.head.sha)
+      BuildQueue.create!(pull_id: pull.id)
+      result.last_commit_hash = pull.head.sha
+      result.save!
+    end
   end
 
-# lotta raw sql here
-# TODO: add activerecord based DB accessor classes
-
-# TODO, de-SQL-ify
   def init_db
     db = SQLite3::Database.new 'buildbot_db'
-    db.execute "CREATE TABLE IF NOT EXISTS pull_log(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, build_triggered INTEGER)"
+    db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, build_triggered INTEGER)"
+    db.execute "CREATE TABLE IF NOT EXISTS build_queues(id INTEGER PRIMARY KEY, pull_id INTEGER, locked_at INTEGER)"
     db
   end
 
-# TODO, de-SQL-ify
-  def save_pull pull_id, last_commit_hash
-    db = init_db
-    result = db.execute "SELECT * from pull_log WHERE pull_id = '#{pull_id}'"
+  def init_or_get_by_pull_id pull_id
+    result = PullLog.where(pull_id: pull_id)
     if (result.count == 0)
-      db.execute "INSERT INTO pull_log(pull_id, last_commit_hash, build_triggered) VALUES (#{pull_id}, '#{last_commit_hash}', 0)"
-      result = db.execute "SELECT * from pull_log WHERE pull_id = '#{pull_id}'"
+      out = PullLog.create!(pull_id: pull_id, build_triggered: 0)
+    else
+      out = result.first
     end
-    result.inspect
+    out
   end
 
 end
+
+w = Watcher.new
+w.main
