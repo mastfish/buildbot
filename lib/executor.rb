@@ -7,8 +7,6 @@ class Executor
   require 'active_record'
   require 'rest_client'
 
-  API_BASE = "https://justin.lambert:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/"
-
   ActiveRecord::Base.establish_connection(
     :adapter => 'sqlite3',
     :database => 'buildbot_db'
@@ -33,7 +31,7 @@ class Executor
   end
 
   def clone
-    url = API_BASE + "rest/api/latest/clone/BUILDBOT-MAIN:BUILDBOT-FIRST?os_authType=basic"
+    url = "https://justin.lambert:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/clone/BUILDBOT-MAIN:BUILDBOT-FIRST?os_authType=basic"
     req = RestClient::Request.new(
       :method => :put,
       :url => url,
@@ -44,15 +42,31 @@ class Executor
 
   def update_info
     payload = test_payload
-    url = API_BASE + "chain/admin/config/updateRepository.action"
-    req = RestClient::Request.new(
-      :method => :post,
-      :url => url,
-      :headers => { :accept => 'text/html'},
-      :payload => payload,
-      :multipart => true
-    ).execute
-    binding.pry
+    url = "https://bamboo.bigcommerce.net/chain/admin/config/updateRepository.action"
+    begin
+      req = RestClient::Request.new(
+        :method => :post,
+        :url => url,
+        :headers => { :accept => 'text/html'},
+        :payload => payload,
+        :cookies => test_cookies,
+        :multipart => true
+      ).execute
+    rescue => e
+      binding.pry
+    end
+  end
+
+  def test_cookies
+    {
+      "BAMBOO-BUILD-FILTER" => "LAST_25_BUILDS",
+      "BAMBOO-DEFAULT-REPOSITORY" => "com.atlassian.bamboo.plugins.atlassian-bamboo-plugin-git:gh",
+      "JSESSIONID" => "1evg11ynr72cdb5g00oqt180x",
+      "seraph.bamboo" => "83722248%3A5d9db4535c3214988cc54b9257ecf10f90bc4a75",
+      "atlassian.bamboo.dashboard.tab.selected" => "allPlansTab",
+      "BAMBOO-MAX-DISPLAY-LINES" => "25",
+      "bamboo.dash.display.toggles" => "buildQueueActions-actions-queueControl",
+    }
   end
 
   def test_payload
@@ -80,7 +94,7 @@ class Executor
       "filter.pattern.option" => "none",
       "selectFields" => "filter.pattern.option",
       "filter.pattern.regex" => "",
-      "changeset.filter.pattern.regex" => "",
+      "changeset.filter.pattern.regex" => "OHAI",
       "selectedWebRepositoryViewer" => "bamboo.webrepositoryviewer.provided\":noRepositoryViewer",
       "selectFields" => "selectedWebRepositoryViewer",
       "webRepository.genericRepositoryViewer.webRepositoryUrl" => "",
