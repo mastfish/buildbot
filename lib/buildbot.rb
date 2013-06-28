@@ -1,3 +1,11 @@
+require 'github_api'
+require 'sqlite3'
+require 'active_record'
+
+# Database initialization
+db = SQLite3::Database.new 'buildbot_db'
+db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, passing_test INTEGER)"
+
 # Db setup goes here, because why not?
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
@@ -5,12 +13,32 @@ ActiveRecord::Base.establish_connection(
 )
 
 class PullLog < ActiveRecord::Base
+
+  def has_passing_plan?
+    return false
+  end
+
+  def post_status_to_github
+    p 'TBA'
+  end
+
 end
 
-class BuildQueue < ActiveRecord::Base
+class BambooWatcher
+
+  def main
+    PullLog.where(passing_test: 0).each do |pull|
+      if (pull.has_passing_plan?)
+        pull.post_status_to_github
+        pull.passing_test = 1
+        pull.save!
+      end
+    end
+  end
+
 end
 
-class Watcher
+class GitWatcher
 
   def list
     github = Github.new :user => 'mastfish', :repo => 'buildbot'
@@ -22,18 +50,7 @@ class Watcher
     #   })]
   end
 
-  def check_for_passing_plans hash
-    result = mongo.where(tag: hash)
-    if (result.count == 0)
-      p 'false'
-    else
-      p 'true'
-    end
-  end
-
-
   def main
-    init_db
     list.each do |pull|
       process_pull pull
     end
@@ -42,16 +59,10 @@ class Watcher
   def process_pull pull
     result = init_or_get_by_pull_id(pull.id)
     if (result.last_commit_hash != pull.head.sha)
-      check_for_passing_plans pull.head.sha
+      result.passing_test = 0
       result.last_commit_hash = pull.head.sha
       result.save!
     end
-  end
-
-  def init_db
-    db = SQLite3::Database.new 'buildbot_db'
-    db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, passing_test INTEGER)"
-    db
   end
 
   def init_or_get_by_pull_id pull_id
@@ -65,3 +76,8 @@ class Watcher
   end
 
 end
+
+g = GitWatcher.new
+b = BambooWatcher.new
+g.main
+b.main

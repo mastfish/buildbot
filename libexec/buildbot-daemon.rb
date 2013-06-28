@@ -41,17 +41,17 @@ end
 #end
 
 DaemonKit::Cron.scheduler.every("30s") do
-  DaemonKit.logger.debug "Watcher task started at #{Time.now}"
-  watcher = Watcher.new
-  watcher.main
-  DaemonKit.logger.debug "Watcher task completed at #{Time.now}"
+  DaemonKit.logger.debug "GitWatcher task started at #{Time.now}"
+  gwatcher = GitWatcher.new
+  gwatcher.main
+  DaemonKit.logger.debug "GitWatcher task completed at #{Time.now}"
 end
 
 DaemonKit::Cron.scheduler.every("1m") do
-  DaemonKit.logger.debug "Executor task started at #{Time.now}"
-  e = Executor.new
-  e.main
-  DaemonKit.logger.debug "Executor task completed at #{Time.now}"
+  DaemonKit.logger.debug "BambooWatcher task started at #{Time.now}"
+  bwatcher = BambooWatcher.new
+  bwatcher.main
+  DaemonKit.logger.debug "BambooWatcher task completed at #{Time.now}"
 end
 
 
