@@ -3,6 +3,7 @@ require 'sqlite3'
 require 'active_record'
 require 'rest_client'
 require 'json'
+require 'pry'
 
 # Database initialization
 db = SQLite3::Database.new 'buildbot_db'
@@ -27,7 +28,7 @@ class PullLog < ActiveRecord::Base
       ).execute
     results = JSON.parse(req)
     results["results"]["result"].each do |result|
-      # link = "https://bamboo.bigcommerce.net/browse/#{result["key"]}"
+      @link = "https://bamboo.bigcommerce.net/browse/#{result["key"]}"
       if (result["state"] == "Successful")
         return true
       end
@@ -36,6 +37,9 @@ class PullLog < ActiveRecord::Base
   end
 
   def post_status_to_github
+    comment = @link
+    github = Github.new :user => 'mastfish', :repo => 'buildbot', login:'mastfish', password:"#{ENV['GITPASS']}"
+    github.issues.comments.create 'mastfish', 'buildbot', '1', "body" => comment
     p 'TBA'
   end
 
