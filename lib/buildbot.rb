@@ -40,7 +40,7 @@ class PullLog < ActiveRecord::Base
     comment = @link
     github = Github.new :user => 'mastfish', :repo => 'buildbot', login:'mastfish', password:"#{ENV['GITPASS']}"
     github.issues.comments.create 'mastfish', 'buildbot', '1', "body" => comment
-    p 'TBA'
+    p 'Passed'
   end
 
 end
@@ -51,12 +51,13 @@ class BambooWatcher
     PullLog.where(passing_test: 0).each do |pull|
       if (pull.has_passing_plan?)
         pull.post_status_to_github
-        # pull.passing_test = 1
+        pull.passing_test = 1
         pull.save!
       else
         p 'Not passed'
       end
     end
+    p 'finished updates'
   end
 
 end
