@@ -19,6 +19,7 @@ GEM
     addressable (2.3.5)
     arel (4.0.0)
     atomic (1.1.10)
+    bson (1.9.0)
     builder (3.1.4)
     coderay (1.0.9)
     daemon-kit (0.2.1)
@@ -28,6 +29,7 @@ GEM
       safely (>= 0.3.1)
       thor
     diff-lcs (1.2.4)
+    durran-validatable (2.0.1)
     eventmachine (1.0.3)
     faraday (0.8.7)
       multipart-post (~> 1.1)
@@ -43,10 +45,17 @@ GEM
     i18n (0.6.4)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    leshill-will_paginate (2.3.11)
     method_source (0.8.1)
-    mime-types (1.23)
     mini_portile (0.5.0)
     minitest (4.7.5)
+    mongo (1.9.0)
+      bson (~> 1.9.0)
+    mongoid (1.0.6)
+      activesupport (>= 2.2.2)
+      durran-validatable (>= 2.0.1)
+      leshill-will_paginate (>= 2.3.11)
+      mongo (>= 0.18.2)
     multi_json (1.7.7)
     multi_xml (0.5.4)
     multipart-post (1.2.0)
@@ -65,8 +74,6 @@ GEM
       slop (~> 3.4)
     rack (1.5.2)
     rake (10.1.0)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -95,9 +102,9 @@ DEPENDENCIES
   activerecord (~> 4.0.0)
   daemon-kit
   github_api
+  mongoid
   pry
   rake
-  rest-client
   rspec
   rufus-scheduler (>= 2.0.3)
   safely
