@@ -49,6 +49,8 @@ class BambooWatcher
         pull.post_status_to_github
         # pull.passing_test = 1
         pull.save!
+      else
+        p 'Not passed'
       end
     end
   end
