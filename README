@@ -7,8 +7,6 @@ git update-index --assume-unchanged password
 To make sure you don't push up your credentials
 
 
-
-
 daemon-kit README
 ================
 
