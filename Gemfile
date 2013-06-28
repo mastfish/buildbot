@@ -14,7 +14,8 @@ gem 'daemon-kit'
 gem 'sqlite3'
 gem 'github_api'
 gem 'activerecord', '~> 4.0.0'
-gem 'mongoid'
+gem 'rest-client'
+gem 'json'
 
 # safely (http://github.com/kennethkalmer/safely)
 gem 'safely'

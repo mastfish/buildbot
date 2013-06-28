@@ -1,6 +1,8 @@
 require 'github_api'
 require 'sqlite3'
 require 'active_record'
+require 'rest_client'
+require 'json'
 
 # Database initialization
 db = SQLite3::Database.new 'buildbot_db'
@@ -15,6 +17,21 @@ ActiveRecord::Base.establish_connection(
 class PullLog < ActiveRecord::Base
 
   def has_passing_plan?
+    p 'testing for ' + last_commit_hash
+    url = "https://justin.lambert:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/result/byChangeset/#{last_commit_hash}"
+    req = RestClient::Request.new(
+        :method => :get,
+        :url => url,
+        :headers => { :accept => 'application/json',
+        :content_type => 'application/json' }
+      ).execute
+    results = JSON.parse(req)
+    results["results"]["result"].each do |result|
+      # link = "https://bamboo.bigcommerce.net/browse/#{result["key"]}"
+      if (result["state"] == "Successful")
+        return true
+      end
+    end
     return false
   end
 
@@ -30,7 +47,7 @@ class BambooWatcher
     PullLog.where(passing_test: 0).each do |pull|
       if (pull.has_passing_plan?)
         pull.post_status_to_github
-        pull.passing_test = 1
+        # pull.passing_test = 1
         pull.save!
       end
     end
