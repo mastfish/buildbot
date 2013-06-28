@@ -41,10 +41,19 @@ end
 #end
 
 DaemonKit::Cron.scheduler.every("30s") do
-  bb = Buildbot.new
-  DaemonKit.logger.debug "Scheduled task completed at #{Time.now}"
-  DaemonKit.logger.debug bb.hello
+  DaemonKit.logger.debug "GitWatcher task started at #{Time.now}"
+  gwatcher = GitWatcher.new
+  gwatcher.main
+  DaemonKit.logger.debug "GitWatcher task completed at #{Time.now}"
 end
+
+DaemonKit::Cron.scheduler.every("1m") do
+  DaemonKit.logger.debug "BambooWatcher task started at #{Time.now}"
+  bwatcher = BambooWatcher.new
+  bwatcher.main
+  DaemonKit.logger.debug "BambooWatcher task completed at #{Time.now}"
+end
+
 
 # Run our 'cron' dameon, suspending the current thread
 DaemonKit::Cron.run

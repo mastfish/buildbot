@@ -12,8 +12,10 @@ ruby '2.0.0'
 # daemon-kit
 gem 'daemon-kit'
 gem 'sqlite3'
-gem 'rest-client'
 gem 'github_api'
+gem 'activerecord', '~> 4.0.0'
+gem 'rest-client'
+gem 'json'
 
 # safely (http://github.com/kennethkalmer/safely)
 gem 'safely'
