@@ -56,7 +56,7 @@ end
 #  DaemonKit.logger.error "Caught exception in job #{job.job_id}: '#{exception}'"
 #end
 
-DaemonKit::Cron.scheduler.every("1m") do
+DaemonKit::Cron.scheduler.every("30s") do
   # Db setup goes here, because why not?
   ActiveRecord::Base.establish_connection(
     :adapter => 'sqlite3',
