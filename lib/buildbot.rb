@@ -68,11 +68,6 @@ class GitWatcher
   def list
     github = Github.new :user => 'mastfish', :repo => 'buildbot'
     github.pull_requests.list
-    # Hitting rate limit on API, mock this for now
-    # [OpenStruct.new({
-    #   "id"=>6577595,
-    #   "head"=> OpenStruct.new({'sha' => '12'})
-    #   })]
   end
 
   def main
@@ -101,8 +96,3 @@ class GitWatcher
   end
 
 end
-
-g = GitWatcher.new
-b = BambooWatcher.new
-g.main
-b.main
