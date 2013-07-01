@@ -7,14 +7,14 @@ require 'pry'
 
 DB_PATH = "#{__dir__}/../db/buildbot_db"
 REPOS = [
-          {user: 'mastfish', repo: 'buildbot'},
-          {user: 'bigcommerce', repo: 'new-mobile'}
+          # {user: 'bigcommerce', repo: 'bigcommerce'},
+          # {user: 'bigcommerce', repo: 'new-mobile'},
+          {user: 'mastfish', repo: 'buildbot'}
         ]
 
 # Database initialization
 db = SQLite3::Database.new DB_PATH
 db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, user STRING, repo STRING, passing_test INTEGER)"
-
 
 # Do your post daemonization configuration here
 # At minimum you need just the first line (without the block), or a lot
