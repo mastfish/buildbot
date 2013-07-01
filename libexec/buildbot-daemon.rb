@@ -1,4 +1,16 @@
 # Generated cron daemon
+require 'sqlite3'
+require 'active_record'
+require 'rest_client'
+require 'json'
+require 'pry'
+
+DB_PATH = "#{__dir__}/../db/buildbot_db"
+
+# Database initialization
+db = SQLite3::Database.new DB_PATH
+db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, passing_test INTEGER)"
+
 
 # Do your post daemonization configuration here
 # At minimum you need just the first line (without the block), or a lot
@@ -41,6 +53,11 @@ end
 #end
 
 DaemonKit::Cron.scheduler.every("30s") do
+  # Db setup goes here, because why not?
+  ActiveRecord::Base.establish_connection(
+    :adapter => 'sqlite3',
+    :database => DB_PATH
+  )
   DaemonKit.logger.debug "GitWatcher task started at #{Time.now}"
   gwatcher = GitWatcher.new
   gwatcher.main
@@ -48,6 +65,10 @@ DaemonKit::Cron.scheduler.every("30s") do
 end
 
 DaemonKit::Cron.scheduler.every("1m") do
+  ActiveRecord::Base.establish_connection(
+    :adapter => 'sqlite3',
+    :database => DB_PATH
+  )
   DaemonKit.logger.debug "BambooWatcher task started at #{Time.now}"
   bwatcher = BambooWatcher.new
   bwatcher.main

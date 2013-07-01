@@ -1,20 +1,4 @@
 require 'github_api'
-require 'sqlite3'
-require 'active_record'
-require 'rest_client'
-require 'json'
-require 'pry'
-DB_PATH = "#{__dir__}/buildbot_db"
-
-# Database initialization
-db = SQLite3::Database.new DB_PATH
-db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, passing_test INTEGER)"
-
-# Db setup goes here, because why not?
-ActiveRecord::Base.establish_connection(
-  :adapter => 'sqlite3',
-  :database => DB_PATH
-)
 
 class PullLog < ActiveRecord::Base
 
@@ -40,7 +24,8 @@ class PullLog < ActiveRecord::Base
   def post_status_to_github
     comment = @link + ' :green_apple:'
     github = Github.new :user => 'mastfish', :repo => 'buildbot', login:'mastfish', password:"#{ENV['GITPASS']}"
-    github.issues.comments.create 'mastfish', 'buildbot', '1', "body" => comment
+    pull = github.pull_requests.list.select{|pull| pull.id == self.pull_id}
+    github.issues.comments.create 'mastfish', 'buildbot', pull.number, "body" => comment
     p 'Passed'
   end
 
