@@ -12,7 +12,7 @@ REPOS = [
 
 # Database initialization
 db = SQLite3::Database.new DB_PATH
-db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, passing_test INTEGER)"
+db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, user STRING, repo STRING, passing_test INTEGER)"
 
 
 # Do your post daemonization configuration here
