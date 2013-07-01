@@ -4,15 +4,16 @@ require 'active_record'
 require 'rest_client'
 require 'json'
 require 'pry'
+DB_PATH = "#{__dir__}/buildbot_db"
 
 # Database initialization
-db = SQLite3::Database.new 'buildbot_db'
+db = SQLite3::Database.new DB_PATH
 db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, passing_test INTEGER)"
 
 # Db setup goes here, because why not?
 ActiveRecord::Base.establish_connection(
   :adapter => 'sqlite3',
-  :database => 'buildbot_db'
+  :database => DB_PATH
 )
 
 class PullLog < ActiveRecord::Base
