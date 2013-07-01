@@ -6,11 +6,15 @@ require 'json'
 require 'pry'
 
 DB_PATH = "#{__dir__}/../db/buildbot_db"
+REPOS = [
+          # {user: 'bigcommerce', repo: 'bigcommerce'},
+          # {user: 'bigcommerce', repo: 'new-mobile'},
+          {user: 'mastfish', repo: 'buildbot'}
+        ]
 
 # Database initialization
 db = SQLite3::Database.new DB_PATH
-db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, passing_test INTEGER)"
-
+db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, user STRING, repo STRING, passing_test INTEGER)"
 
 # Do your post daemonization configuration here
 # At minimum you need just the first line (without the block), or a lot
@@ -59,8 +63,10 @@ DaemonKit::Cron.scheduler.every("30s") do
     :database => DB_PATH
   )
   DaemonKit.logger.debug "GitWatcher task started at #{Time.now}"
-  gwatcher = GitWatcher.new
-  gwatcher.main
+  REPOS.each do |repo|
+    gwatcher = GitWatcher.new repo[:user], repo[:repo]
+    gwatcher.main
+  end
   DaemonKit.logger.debug "GitWatcher task completed at #{Time.now}"
 end
 
