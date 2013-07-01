@@ -7,7 +7,8 @@ require 'pry'
 
 DB_PATH = "#{__dir__}/../db/buildbot_db"
 REPOS = [
-          {user: 'mastfish', repo: 'buildbot'}
+          {user: 'mastfish', repo: 'buildbot'},
+          {user: 'bigcommerce', repo: 'new-mobile'}
         ]
 
 # Database initialization
@@ -55,17 +56,17 @@ end
 #  DaemonKit.logger.error "Caught exception in job #{job.job_id}: '#{exception}'"
 #end
 
-DaemonKit::Cron.scheduler.every("30s") do
+DaemonKit::Cron.scheduler.every("1m") do
   # Db setup goes here, because why not?
   ActiveRecord::Base.establish_connection(
     :adapter => 'sqlite3',
     :database => DB_PATH
   )
   DaemonKit.logger.debug "GitWatcher task started at #{Time.now}"
-  # REPOS.each do |repo|
-  gwatcher = GitWatcher.new 'mastfish', 'buildbot'
-  gwatcher.main
-  # end
+  REPOS.each do |repo|
+    gwatcher = GitWatcher.new repo[:user], repo[:repo]
+    gwatcher.main
+  end
   DaemonKit.logger.debug "GitWatcher task completed at #{Time.now}"
 end
 
