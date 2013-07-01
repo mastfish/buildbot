@@ -24,7 +24,7 @@ class PullLog < ActiveRecord::Base
   def post_status_to_github
     comment = @link + ' :green_apple:'
     github = Github.new :user => 'mastfish', :repo => 'buildbot', login:'mastfish', password:"#{ENV['GITPASS']}"
-    pull = github.pull_requests.list.select{|pull| pull.id == self.pull_id}
+    pull = github.pull_requests.list.select{|pull| pull.id == self.pull_id}.first
     github.issues.comments.create 'mastfish', 'buildbot', pull.number, "body" => comment
     p 'Passed'
   end
