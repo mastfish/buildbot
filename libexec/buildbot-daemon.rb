@@ -6,6 +6,9 @@ require 'json'
 require 'pry'
 
 DB_PATH = "#{__dir__}/../db/buildbot_db"
+REPOS = [
+          {user: 'mastfish', repo: 'buildbot'}
+        ]
 
 # Database initialization
 db = SQLite3::Database.new DB_PATH
@@ -59,8 +62,10 @@ DaemonKit::Cron.scheduler.every("30s") do
     :database => DB_PATH
   )
   DaemonKit.logger.debug "GitWatcher task started at #{Time.now}"
-  gwatcher = GitWatcher.new
+  # REPOS.each do |repo|
+  gwatcher = GitWatcher.new 'mastfish', 'buildbot'
   gwatcher.main
+  # end
   DaemonKit.logger.debug "GitWatcher task completed at #{Time.now}"
 end
 

@@ -23,9 +23,9 @@ class PullLog < ActiveRecord::Base
 
   def post_status_to_github
     comment = @link + ' :green_apple:'
-    github = Github.new :user => 'mastfish', :repo => 'buildbot', login:'mastfish', password:"#{ENV['GITPASS']}"
+    github = Github.new :user => 'mastfish', :repo => repo, login: user, password:"#{ENV['GITPASS']}"
     pull = github.pull_requests.list.select{|pull| pull.id == self.pull_id}.first
-    github.issues.comments.create 'mastfish', 'buildbot', pull.number, "body" => comment
+    github.issues.comments.create repo, user, pull.number, "body" => comment
     p 'Passed'
   end
 
@@ -50,8 +50,13 @@ end
 
 class GitWatcher
 
+  def initialize(user, repo)
+    @user = user
+    @repo = repo
+  end
+
   def list
-    github = Github.new :user => 'mastfish', :repo => 'buildbot'
+    github = Github.new :user => @user, :repo => @repo
     github.pull_requests.list
   end
 
@@ -71,9 +76,9 @@ class GitWatcher
   end
 
   def init_or_get_by_pull_id pull_id
-    result = PullLog.where(pull_id: pull_id)
+    result = PullLog.where(pull_id: pull_id, user: @user, repo: @repo)
     if (result.count == 0)
-      out = PullLog.create!(pull_id: pull_id, passing_test: 0)
+      out = PullLog.create!(pull_id: pull_id, user: @user, repo: @repo, passing_test: 0)
     else
       out = result.first
     end
