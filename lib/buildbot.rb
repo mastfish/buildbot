@@ -6,7 +6,7 @@ class PullLog < ActiveRecord::Base
 
   # statuses: pass | fail | no_tests
   def status
-    if (plan_results.size == 0)
+    if (plan_results['size'] == 0)
       return 'no_tests'
     end
     p canonical_result
