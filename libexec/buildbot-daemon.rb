@@ -4,6 +4,7 @@ require 'active_record'
 require 'rest_client'
 require 'json'
 require 'pry'
+require 'github_api'
 
 DB_PATH = "#{__dir__}/../db/buildbot_db"
 REPOS = [
@@ -14,7 +15,7 @@ REPOS = [
 
 # Database initialization
 db = SQLite3::Database.new DB_PATH
-db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, user STRING, repo STRING, passing_test INTEGER)"
+db.execute "CREATE TABLE IF NOT EXISTS pull_logs(id INTEGER PRIMARY KEY, pull_id INTEGER, last_commit_hash TEXT, user STRING, repo STRING, last_status STRING, checked INTEGER)"
 
 # Do your post daemonization configuration here
 # At minimum you need just the first line (without the block), or a lot

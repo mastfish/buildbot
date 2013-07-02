@@ -1,10 +1,7 @@
 BUILDBOT README
 ================
-In order to authenticate, you'll need to put your password into environment variables
-To do this, add your password to "password" and source the file.
-You probably should run
-git update-index --assume-unchanged password
-To make sure you don't push up your credentials
+In order to authenticate, you'll need to set the following environment variables:
+BAMBOOUSER, PASSWORD, GITPASS, GITUSER
 
 
 Directories
