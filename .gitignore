@@ -1,3 +1,2 @@
 log/*
-buildbot_db
-password
+db/*
