@@ -15,7 +15,7 @@ class PullLog < ActiveRecord::Base
     if (canonical_result['state'] != "Successful")
       return 'fail'
     end
-    raise
+    raise 'Status should be either pass, fail or no_test'
   end
 
   def canonical_result
