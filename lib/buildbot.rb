@@ -9,6 +9,7 @@ class PullLog < ActiveRecord::Base
     if (plan_results.size == 0)
       return 'no_tests'
     end
+    p canonical_result
     if (canonical_result['state'] == "Successful")
       return 'pass'
     end
