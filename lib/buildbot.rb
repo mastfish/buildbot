@@ -48,7 +48,7 @@ class PullLog < ActiveRecord::Base
       return "Build passing at https://bamboo.bigcommerce.net/browse/#{canonical_result["key"]} :green_apple:"
     when 'fail'
       return "Build failing at https://bamboo.bigcommerce.net/browse/#{canonical_result["key"]} :sparkles:"
-    when 'no_tests'
+    when 'no_tests' # not used right now
       return "No tests have been run for the latest pull in this pull_request :boom:"
     else
       return ''
@@ -57,7 +57,7 @@ class PullLog < ActiveRecord::Base
 
   def post_status_to_github
     github = Github.new :user => user, :repo => repo, login: "#{ENV['GITUSER']}", password:"#{ENV['GITPASS']}"
-    pull = github.pull_requests.list.select{|pull| pull.id == self.pull_id}.first # Highlander: There can be only one
+    pull = github.pull_requests.list.select{|pull| pull.id == self.pull_id}.first # There can be only one
     github.issues.comments.create user, repo, pull.number, "body" => status_comment
     p "Posted #{status_comment}"
   end
@@ -69,15 +69,15 @@ class BambooWatcher
   def main
     p PullLog.all
     PullLog.where(checked: 0).each do |pull|
-      if (pull.status_changed?)
+      if (pull.status_changed? && (pull.status != 'no_tests'))
         p "Checked: status changed to #{pull.status}"
         pull.post_status_to_github
         pull.last_status = pull.status
+        pull.checked = 1
+        pull.save!
       else
-        p 'Checked: Status unchanged'
+        p 'Checked: Status unchanged, or no tests found'
       end
-      pull.checked = 1
-      pull.save!
     end
     p 'finished updates'
   end
