@@ -1,10 +1,34 @@
-require 'github_api'
-
 class PullLog < ActiveRecord::Base
 
-  def has_passing_plan?
-    p 'testing for ' + last_commit_hash
-    url = "https://justin.lambert:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/result/byChangeset/#{last_commit_hash}"
+  def status_changed?
+    return status != last_status
+  end
+
+  # statuses: pass | fail | no_tests
+  def status
+    if (plan_results.size == 0)
+      return 'no_tests'
+    end
+    if (canonical_result['state'] == "Successful")
+      return 'pass'
+    end
+    if (canonical_result['state'] != "Successful")
+      return 'fail'
+    end
+    raise
+  end
+
+  def canonical_result
+    plan_results['result'].last
+  end
+
+  # Cache slooooow API calls
+  def plan_results
+    if @plan_results
+      return @plan_results
+    end
+    p 'Getting results for ' + last_commit_hash
+    url = "https://#{ENV['BAMBOOUSER']}:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/result/byChangeset/#{last_commit_hash}"
     req = RestClient::Request.new(
         :method => :get,
         :url => url,
@@ -12,21 +36,29 @@ class PullLog < ActiveRecord::Base
         :content_type => 'application/json' }
       ).execute
     results = JSON.parse(req)
-    results["results"]["result"].each do |result|
-      @link = "https://bamboo.bigcommerce.net/browse/#{result["key"]}"
-      if (result["state"] == "Successful")
-        return true
-      end
+    @plan_results = results["results"]
+    p @plan_results
+    results["results"]
+  end
+
+  def status_comment
+    case status
+    when 'pass'
+      return "Build passing at https://bamboo.bigcommerce.net/browse/#{canonical_result["key"]} :green_apple:"
+    when 'fail'
+      return "Build failing at https://bamboo.bigcommerce.net/browse/#{canonical_result["key"]} :sparkles:"
+    when 'no_tests'
+      return "No tests have been run for the latest pull in this pull_request :boom:"
+    else
+      return ''
     end
-    return false
   end
 
   def post_status_to_github
-    comment = @link + ' :green_apple:'
     github = Github.new :user => user, :repo => repo, login: "#{ENV['GITUSER']}", password:"#{ENV['GITPASS']}"
-    pull = github.pull_requests().list.select{|pull| pull.id == self.pull_id}.first
-    github.issues.comments.create user, repo, pull.number, "body" => comment
-    p 'Passed'
+    pull = github.pull_requests.list.select{|pull| pull.id == self.pull_id}.first # Highlander: There can be only one
+    github.issues.comments.create user, repo, pull.number, "body" => status_comment
+    p "Posted #{status_comment}"
   end
 
 end
@@ -34,14 +66,17 @@ end
 class BambooWatcher
 
   def main
-    PullLog.where(passing_test: 0).each do |pull|
-      if (pull.has_passing_plan?)
+    p PullLog.all
+    PullLog.where(checked: 0).each do |pull|
+      if (pull.status_changed?)
+        p "Checked: status changed to #{pull.status}"
         pull.post_status_to_github
-        pull.passing_test = 1
-        pull.save!
+        pull.last_status = pull.status
       else
-        p 'Not passed'
+        p 'Checked: Status unchanged'
       end
+      pull.checked = 1
+      pull.save!
     end
     p 'finished updates'
   end
@@ -69,7 +104,7 @@ class GitWatcher
   def process_pull pull
     result = init_or_get_by_pull_id(pull.id)
     if (result.last_commit_hash != pull.head.sha)
-      result.passing_test = 0
+      result.checked = 0
       result.last_commit_hash = pull.head.sha
       result.save!
     end
@@ -78,7 +113,7 @@ class GitWatcher
   def init_or_get_by_pull_id pull_id
     result = PullLog.where(pull_id: pull_id, user: @user, repo: @repo)
     if (result.count == 0)
-      out = PullLog.create!(pull_id: pull_id, user: @user, repo: @repo, passing_test: 0)
+      out = PullLog.create!(pull_id: pull_id, user: @user, repo: @repo, last_status: '',checked: 0)
     else
       out = result.first
     end
