@@ -8,7 +8,7 @@ require 'github_api'
 
 DB_PATH = "#{__dir__}/../db/buildbot_db"
 REPOS = [
-          # {user: 'bigcommerce', repo: 'bigcommerce'},
+          {user: 'bigcommerce', repo: 'bigcommerce'},
           # {user: 'bigcommerce', repo: 'new-mobile'},
           {user: 'mastfish', repo: 'buildbot'}
         ]
@@ -71,7 +71,7 @@ DaemonKit::Cron.scheduler.every("30s") do
   DaemonKit.logger.debug "GitWatcher task completed at #{Time.now}"
 end
 
-DaemonKit::Cron.scheduler.every("1m") do
+DaemonKit::Cron.scheduler.in("1s") do
   ActiveRecord::Base.establish_connection(
     :adapter => 'sqlite3',
     :database => DB_PATH
