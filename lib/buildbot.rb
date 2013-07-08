@@ -6,33 +6,38 @@ class PullLog < ActiveRecord::Base
 
   # statuses: pass | fail | no_tests
   def status
-    if (canonical_result['state'] == "Successful")
+    if (plan_results == [])
+      return 'no_tests'
+    end
+    if (plan_results['state'] == "Successful")
       return 'pass'
     end
-    if (canonical_result['state'] != "Successful")
+    if (plan_results['state'] != "Successful")
       return 'fail'
     end
     return 'no_tests'
   end
 
-  def canonical_result
-    plan_results
-  end
-
   # Cache slooooow API calls
   def plan_results
+    if @results
+      return @results
+    end
+
     p 'Getting results for ' + last_commit_hash
     api = BambooAPI.new
     results = api.result_by_changeset(last_commit_hash)
+    @results = results
+    p results
     results
   end
 
   def status_comment
     case status
     when 'pass'
-      return "Build passing at https://bamboo.bigcommerce.net/browse/#{canonical_result["key"]} :green_apple:"
+      return "Build passing at https://bamboo.bigcommerce.net/browse/#{plan_results["key"]} :green_apple:"
     when 'fail'
-      return "Build failing at https://bamboo.bigcommerce.net/browse/#{canonical_result["key"]} :sparkles:"
+      return "Build failing at https://bamboo.bigcommerce.net/browse/#{plan_results["key"]} :sparkles:"
     when 'no_tests' # not used right now
       return "No tests have been run for the latest pull in this pull_request :boom:"
     else
@@ -120,7 +125,7 @@ class BambooAPI
     results = request url
     result = nil
     if (results['results']['size'] == 0)
-      # plans.each do |plan|
+      plans.each do |plan|
         plan = {'key' => 'BUILDBOT-FIRST'}
         p "testing #{plan['key']}"
         branches(plan).each do |branch|
@@ -130,13 +135,14 @@ class BambooAPI
             end
           end
         end
-      # end
+      end
     else
       return results['results']['result'].last
     end
   end
 
   def result_match_changeset?(test_result, sha)
+    p '*******************MATCHED!*************************'
     url = "https://#{ENV['BAMBOOUSER']}:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/result/#{test_result['key']}"
     results = request url
     return sha == results['vcsRevisionKey']
