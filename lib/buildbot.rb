@@ -126,11 +126,11 @@ class BambooAPI
     result = nil
     if (results['results']['size'] == 0)
       plans.each do |plan|
-        plan = {'key' => 'BUILDBOT-FIRST'}
         p "testing #{plan['key']}"
         branches(plan).each do |branch|
           test_results(branch).each do |test_result|
             if result_match_changeset?(test_result, sha)
+              p '*******************MATCHED!*************************'
               return test_result
             end
           end
@@ -142,7 +142,7 @@ class BambooAPI
   end
 
   def result_match_changeset?(test_result, sha)
-    p '*******************MATCHED!*************************'
+    p "checking branch #{test_result['key']}"
     url = "https://#{ENV['BAMBOOUSER']}:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/result/#{test_result['key']}"
     results = request url
     return sha == results['vcsRevisionKey']
