@@ -60,6 +60,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml (~> 0.5)
       rack (~> 1.2)
+    parallel (0.7.0)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -97,6 +98,7 @@ DEPENDENCIES
   daemon-kit
   github_api
   json
+  parallel
   pry
   rake
   rest-client

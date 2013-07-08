@@ -16,6 +16,7 @@ gem 'github_api'
 gem 'activerecord', '~> 4.0.0'
 gem 'rest-client'
 gem 'json'
+gem 'parallel'
 
 # safely (http://github.com/kennethkalmer/safely)
 gem 'safely'
