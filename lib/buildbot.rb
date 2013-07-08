@@ -6,7 +6,7 @@ class PullLog < ActiveRecord::Base
 
   # statuses: pass | fail | no_tests
   def status
-    if (plan_results == [])
+    if (!plan_results || plan_results == [])
       return 'no_tests'
     end
     if (plan_results['state'] == "Successful")
@@ -29,6 +29,7 @@ class PullLog < ActiveRecord::Base
     results = api.result_by_changeset(last_commit_hash)
     @results = results
     p results
+    p results.class
     results
   end
 
@@ -125,24 +126,25 @@ class BambooAPI
     results = request url
     result = nil
     if (results['results']['size'] == 0)
-      plans.each do |plan|
-        p "testing #{plan['key']}"
-        branches(plan).each do |branch|
-          test_results(branch).each do |test_result|
+      Parallel.each(plans, :in_threads => 4) do |plan|
+        # p "testing #{plan['key']}"
+        Parallel.each(branches(plan), :in_threads => 4) do |branch|
+          Parallel.each(test_results(branch), :in_threads => 20) do |test_result|
             if result_match_changeset?(test_result, sha)
               p '*******************MATCHED!*************************'
-              return test_result
+              result = test_result
             end
           end
         end
       end
+      return result
     else
       return results['results']['result'].last
     end
   end
 
   def result_match_changeset?(test_result, sha)
-    p "checking branch #{test_result['key']}"
+    # p "checking branch #{test_result['key']}"
     url = "https://#{ENV['BAMBOOUSER']}:#{ENV['PASSWORD']}@bamboo.bigcommerce.net/rest/api/latest/result/#{test_result['key']}"
     results = request url
     return sha == results['vcsRevisionKey']
